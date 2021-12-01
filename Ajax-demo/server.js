@@ -21,37 +21,30 @@ var server = http.createServer(function(request, response){
 
   console.log('有个傻子发请求过来啦！路径（带查询参数）为：' + pathWithQuery)
 
-  if(path === '/'){
+  if(path === '/index.html'){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <link rel="stylesheet" href="/x">
-      </head>
-      <body>
-        <h1>标题</h1>
-      </body>
-      </thml>
-    `)
+    response.write(fs.readFileSync('public/index.html'))
     response.end()
-  }else if(path === '/x'){
+  } else if(path === '/main.js'){
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
+    response.write(fs.readFileSync('public/main.js'))
+    response.end()
+  } else if(path === '/style.css'){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.write(`body{color:red;}`)
+    response.write(fs.readFileSync('public/style.css'))
     response.end()
-  }else{
+  } else{
     response.statusCode = 404
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write("你访问的页面不存在")
+    response.write('所在路径不存在对应的内容')
     response.end()
   }
 
   /******** 代码结束，下面不要看 ************/
-})
+});
 
 server.listen(port)
-console.log('监听 ' + port + ' 成功\n请用在空中转体720度然后用电饭煲打开 http://localhost:' + port)
-
-
+console.log('监听 ' + port + ' 成功\n请用在空中转体720度然后用电饭煲打开 http://localhost:' + port);
