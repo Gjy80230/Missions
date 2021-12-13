@@ -22,8 +22,18 @@ var server = http.createServer(function(request, response){
   console.log('发请求过来啦！路径（带查询参数）为：' + pathWithQuery)
 
   response.statusCode = 200
-  response.setHeader('Content-Type', 'text/html;charset=utf-8')
   const filePath = path === '/' ? '/index.html' : path
+  const index = filePath.lastIndexOf('.')
+  let suffix = filePath.substring(index)
+  const fileTypes = {
+    '.html':'text/html',
+    '.css' :'text/css',
+    '.js'  :'text/javascript',
+    '.json'  :'text/json',
+    '.jpg' :'image/jpeg',
+    '.png' :'image/png'
+  }
+  response.setHeader('Content-Type', `${fileTypes[suffix] || 'text/html'};charset=utf-8`)
   let content
   try{
     content = fs.readFileSync(`./public${filePath}`)
