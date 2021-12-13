@@ -21,23 +21,19 @@ var server = http.createServer(function(request, response){
 
   console.log('发请求过来啦！路径（带查询参数）为：' + pathWithQuery)
 
-  if(path === '/'){
-    response.statusCode = 200
-    response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write(fs.readFileSync('./public/index.html'))
-    response.end()
-  }else if(path === '/style.css'){
-    response.statusCode = 200
-    response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.write(fs.readFileSync('./public/style.css'))
-    response.end()
-  }else{
+  response.statusCode = 200
+  response.setHeader('Content-Type', 'text/html;charset=utf-8')
+  const filePath = path === '/' ? '/index.html' : path
+  let content
+  try{
+    content = fs.readFileSync(`./public${filePath}`)
+  }catch(error){
+    content = '文件不存在'
     response.statusCode = 404
-    response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write("你访问的页面不存在")
-    response.end()
   }
-
+  response.write(content)
+  response.end()
+  
   /******** 代码结束，下面不要看 ************/
 })
 
