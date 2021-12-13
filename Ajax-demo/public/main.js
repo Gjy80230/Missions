@@ -3,13 +3,31 @@ getJSON.onclick = ()=>{
     request.open("GET", "/5.json")
     request.onreadystatechange = ()=>{
         if(request.readyState === 4 && request.status === 200){
-            console.log(request.response)
             const object = JSON.parse(request.response)
             myName.textContent = object.name
         }
     }
     request.send()
+    console.log(request.response)
+    setTimeout(()=>{
+        console.log(request.response)
+    },3000)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 getXML.onclick = ()=>{
     const request = new XMLHttpRequest()
