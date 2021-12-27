@@ -33,6 +33,7 @@ var server = http.createServer(function(request, response){
     '.jpg' :'image/jpeg',
     '.png' :'image/png'
   }
+  //除了上面对象中的值，还要'text/html'来兜底
   response.setHeader('Content-Type', `${fileTypes[suffix] || 'text/html'};charset=utf-8`)
   let content
   try{
